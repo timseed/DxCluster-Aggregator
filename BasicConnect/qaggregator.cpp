@@ -4,10 +4,7 @@ QAggregator::QAggregator(QObject *parent):
     QObject(parent)
 {
 qDebug() << "Agg initialized";
-}
 
-void QAggregator::Setup()
-{
     _Agg = new QTcpServer();
        if (!_Agg->listen(QHostAddress::Any,portnumber)) {
            qDebug() << " Agg Server Unable to start the server: " << _Agg->errorString();
@@ -32,10 +29,55 @@ void QAggregator::Setup()
                                  "Connect to DxCluster Nodes now")
                               .arg(ipAddress).arg(_Agg->serverPort());
 
+
+       connect(_Agg, SIGNAL(newConnection()), this, SLOT(onNewConnection()));
+
 }
 
 void QAggregator::addText(const char *data, int n)
 {
     QString my_data(data);
+    int nC=0;
     qDebug() << "Agg got data" << my_data;
+    for (QTcpSocket* socket : _sockets) {
+            qDebug() << "Sending to Client " << ++nC;
+            socket->write((my_data+"\n").toUtf8());
+    }
 }
+
+void QAggregator::onNewConnection()
+{
+    qDebug() << "Got a New Connection";
+    QTcpSocket *clientSocket = _Agg->nextPendingConnection();
+    connect(clientSocket, SIGNAL(readyRead()), this, SLOT(onReadyRead()));
+    connect(clientSocket, SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(onSocketStateChanged(QAbstractSocket::SocketState)));
+
+       _sockets.push_back(clientSocket);
+       //for (QTcpSocket* socket : _sockets) {
+       //    socket->write(QByteArray::fromStdString(clientSocket->peerAddress().toString().toStdString() + " connected to server !\n"));
+       //}
+       clientSocket->write(QString("Welcome to DU3TW Agg Node\n\n").toUtf8());
+       qDebug() << "Welcome sent to client";
+}
+
+void QAggregator::onSocketStateChanged(QAbstractSocket::SocketState socketState)
+{
+    if (socketState == QAbstractSocket::UnconnectedState)
+       {
+           QTcpSocket* sender = static_cast<QTcpSocket*>(QObject::sender());
+           _sockets.removeOne(sender);
+            qDebug() << "Removing a Connection";
+       }
+}
+
+void QAggregator::onReadyRead()
+{
+    QTcpSocket* sender = static_cast<QTcpSocket*>(QObject::sender());
+      QByteArray datas = sender->readAll();
+      qDebug() << "Read Available";
+      for (QTcpSocket* socket : _sockets) {
+          if (socket != sender)
+              socket->write(QByteArray::fromStdString(sender->peerAddress().toString().toStdString() + ": " + datas.toStdString()));
+      }
+}
+
