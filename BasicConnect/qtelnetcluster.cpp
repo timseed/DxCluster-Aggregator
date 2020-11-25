@@ -14,6 +14,7 @@ void QTelnetCluster::SetAutoAns(QString call, QString filter,QString trigger)
     CallSign=call;
     Filter=filter;
     Trigger=trigger;
+    qDebug() << QString("Call %1 Filter %2 Trigger %3").arg(CallSign).arg(Filter).arg(Trigger);
 }
 
 void QTelnetCluster::SendCallSign(void)
@@ -30,7 +31,6 @@ void QTelnetCluster::SendFilter(void)
 
 void QTelnetCluster::onReadyRead()
 {
-    qDebug() << "**********V@ V@ V@ V@ V@ V@ V@ V@ V@ ************************";
     qint64 readed;
     qint64 processed;
 

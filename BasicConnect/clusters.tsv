@@ -1,0 +1,10 @@
+# Cluster Defs
+# Lines starting with hash are ignored
+# There should be 5 fields per line
+# IP Port Call-sign Filter-command  and trigger to log-in
+# All fields should be pipe | delimited
+#192.168.254.124	7550	du3tw	sh/dx	Client
+#dxc.w9pa.net	7373	du3tw	set dx filter spottercqzone = [18,19,22,23,24,25,26,27,28,29,30,31,32,1] 	enter your call
+#9m2pju.hamradio.my	7300	a45wg	set dx filter spottercqzone = [18,19,22,23,24,25,26,27,28,29,30,31,32,1]	enter your call
+zl2arn.ddns.net	7300	du3tw	set dx filter spottercqzone = [18,19,22,23,24,25,26,27,28,29,30,31,32,1]	login:
+#end of file

@@ -29,7 +29,6 @@ qDebug() << "Agg initialized";
                                  "Connect to DxCluster Nodes now")
                               .arg(ipAddress).arg(_Agg->serverPort());
 
-
        connect(_Agg, SIGNAL(newConnection()), this, SLOT(onNewConnection()));
 
 }
@@ -41,7 +40,7 @@ void QAggregator::addText(const char *data, int n)
     qDebug() << "Agg got data" << my_data;
     for (QTcpSocket* socket : _sockets) {
             qDebug() << "Sending to Client " << ++nC;
-            socket->write((my_data+"\n").toUtf8());
+            socket->write((my_data.trimmed()+"\r\n").toUtf8());  // Skoomlogger is fussy about \r\n ... Runlog does not care
     }
 }
 
@@ -53,9 +52,6 @@ void QAggregator::onNewConnection()
     connect(clientSocket, SIGNAL(stateChanged(QAbstractSocket::SocketState)), this, SLOT(onSocketStateChanged(QAbstractSocket::SocketState)));
 
        _sockets.push_back(clientSocket);
-       //for (QTcpSocket* socket : _sockets) {
-       //    socket->write(QByteArray::fromStdString(clientSocket->peerAddress().toString().toStdString() + " connected to server !\n"));
-       //}
        clientSocket->write(QString("Welcome to DU3TW Agg Node\n\n").toUtf8());
        qDebug() << "Welcome sent to client";
 }
