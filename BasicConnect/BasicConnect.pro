@@ -13,7 +13,8 @@ SOURCES += \
         ../../QtHam2/Contest/Telnet/QTelnet.cpp \
         ../../QtHam2/Contest/Telnet/QTelnet.h \
         main.cpp \
-        qaggregator.cpp
+        qaggregator.cpp \
+        qtelnetcluster.cpp
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
@@ -21,4 +22,5 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     ../../QtHam2/Contest/Telnet/QTelnet.h \
-    qaggregator.h
+    qaggregator.h \
+    qtelnetcluster.h
