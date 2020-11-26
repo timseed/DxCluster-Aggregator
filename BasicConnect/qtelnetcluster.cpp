@@ -29,6 +29,11 @@ void QTelnetCluster::SendFilter(void)
     qDebug() << "Sent Filter";
 }
 
+void QTelnetCluster::Logger(QString data)
+{
+
+}
+
 void QTelnetCluster::onReadyRead()
 {
     qint64 readed;

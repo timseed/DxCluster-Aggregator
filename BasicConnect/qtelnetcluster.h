@@ -12,6 +12,7 @@ public:
     QString Trigger;
     void SendCallSign(void);
     void SendFilter(void);
+    void Logger(QString data);
 
 public slots:
     virtual void onReadyRead() override;
