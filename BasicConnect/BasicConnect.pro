@@ -31,4 +31,5 @@ RESOURCES += \
     resource.qrc
 
 DISTFILES += \
+    ../Readme.md \
     clusters.tsv
