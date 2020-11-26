@@ -32,4 +32,5 @@ RESOURCES += \
 
 DISTFILES += \
     ../Readme.md \
+    NoFilter.ini \
     clusters.tsv
