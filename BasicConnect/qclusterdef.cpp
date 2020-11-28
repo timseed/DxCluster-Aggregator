@@ -47,8 +47,13 @@ void QClusterDef::dump()
     int i=0;
     for (auto n:ClusterRecords)
     {
-        QString out = QString("Rec %1: ip %2 port %3 call %4 trigger %5 filter %6").arg(++i).arg(n.Ip).arg(n.port).arg(n.Call).arg(n.Trigger).arg(n.Filter);
-        qDebug() << out;
+        qDebug( )<< "Rec       " << ++i;
+        qDebug( )<< "  IP      " << n.Ip;
+        qDebug( )<< "  Port    " << n.port;
+        qDebug( )<< "  Call    " << n.Call;
+        qDebug( )<< "  Trigger " << n.Trigger;
+        qDebug( )<< "  Filter  " << n.Filter;
+
     }
 }
 

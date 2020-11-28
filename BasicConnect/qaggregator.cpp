@@ -3,11 +3,16 @@
 QAggregator::QAggregator(QObject *parent):
     QObject(parent)
 {
-qDebug() << "Agg initialized";
-
+    initLogger( "aggregator.log", ldebug);
+    /*
+    *L_(linfo) << "info";
+    * # For QString need to convert
+    * L_(linfo)  << "Connected to " << rec.Ip.toLatin1().data();
+    * */
+    L_(ldebug) << "Agg initialted";
     _Agg = new QTcpServer();
        if (!_Agg->listen(QHostAddress::Any,portnumber)) {
-           qDebug() << " Agg Server Unable to start the server: " << _Agg->errorString();
+           L_(ldebug) << " Agg Server Unable to start the server: " << _Agg->errorString().toLatin1().data();
            _Agg->close();
            return;
        }
@@ -37,9 +42,9 @@ void QAggregator::addText(const char *data, int n)
 {
     QString my_data(data);
     int nC=0;
-    qDebug() << "Agg got data" << my_data;
+    L_(linfo) << my_data.toLatin1().data();
     for (QTcpSocket* socket : _sockets) {
-            qDebug() << "Sending to Client " << ++nC;
+            L_(ldebug) << "Sending to Client " << ++nC;
             socket->write((my_data.trimmed()+"\r\n").toUtf8());  // Skoomlogger is fussy about \r\n ... Runlog does not care
     }
 }

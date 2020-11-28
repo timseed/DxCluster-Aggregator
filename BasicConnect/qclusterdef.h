@@ -7,7 +7,7 @@
 #include <QTextStream>
 #include <QSettings>
 #define MAX_DUMMY_RECS 3
-
+#define DINI_MAX_LINE 1024
 
 // All Lower case.
 struct ClusterRec {

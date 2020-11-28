@@ -7,6 +7,7 @@
 #include <QNetworkInterface>
 #include <QTcpSocket>
 #include <QList>
+#include "log.h"
 
 class QAggregator : public QObject
 {

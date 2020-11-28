@@ -1,9 +1,12 @@
 #include "qtelnetcluster.h"
 
-QTelnetCluster::QTelnetCluster(QObject *parent):
+QTelnetCluster::QTelnetCluster(QObject *parent, QString logname):
     QTelnet(parent)
 {
     //connect( this, SIGNAL(readyRead()),		this, SLOT(onReadyRead()) );
+    QString LogName=QString("%1.log").arg(logname);
+    initLogger(LogName.toLatin1().data(), ldebug);
+
 }
 
 void QTelnetCluster::SetAutoAns(QString call, QString filter,QString trigger)
@@ -31,7 +34,7 @@ void QTelnetCluster::SendFilter(void)
 
 void QTelnetCluster::Logger(QString data)
 {
-
+    L_(linfo) << data.toLatin1().data();
 }
 
 void QTelnetCluster::onReadyRead()
@@ -58,6 +61,7 @@ void QTelnetCluster::onReadyRead()
                     SendFilter();
                 }
                 Q_EMIT(newData(m_buffProcessed, processed));
+                Logger(rxData.trimmed());
                 memset(m_buffProcessed,0,sizeof(m_buffProcessed));
             }
             break;

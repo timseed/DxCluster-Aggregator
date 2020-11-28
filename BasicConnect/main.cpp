@@ -1,12 +1,18 @@
 #include <QCoreApplication>
+#include <QtCore>
 #include <QDateTime>
 #include <QCommandLineParser>
 #include <QDebug>
 #include <QFileInfo>
+#include <unistd.h>
 
 #include "qtelnetcluster.h"
 #include "qaggregator.h"
 #include "qclusterdef.h"
+
+
+#include "log.h"
+
 
 void customMessageHandler(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
@@ -45,6 +51,9 @@ void customMessageHandler(QtMsgType type, const QMessageLogContext &context, con
 
 int main(int argc, char *argv[])
 {
+    initLogger( "basicconnect.log", ldebug);
+    L_(linfo) << "info";
+
     QCoreApplication a(argc, argv);
     QCoreApplication::setApplicationName("BasicConnect");
     QCoreApplication::setApplicationVersion("0.0.a");
@@ -159,10 +168,12 @@ int main(int argc, char *argv[])
     for (auto rec : Cludef->getClusterRecords())
     {
         qDebug() << rec.dump();
-        QTelnetCluster *_telnet   = new QTelnetCluster(a.parent());
+        QTelnetCluster *_telnet   = new QTelnetCluster(a.parent(),rec.Ip);
         QObject::connect(_telnet, SIGNAL(newData(const char*,int)), _Agg, SLOT(addText(const char*,int)) );
         _telnet->connectToHost(rec.Ip,rec.port);
         _telnet->SetAutoAns(rec.Call,rec.Filter, rec.Trigger);
+        L_(linfo)  << "Connected to " << rec.Ip.toLatin1().data();
+        sleep(2);
         clusters.append(_telnet);
     }
 
@@ -170,4 +181,6 @@ int main(int argc, char *argv[])
     qDebug() << "Telnet connected completed";
 
     return a.exec();
+    endLogger();
+
 }
