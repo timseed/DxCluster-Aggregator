@@ -8,6 +8,12 @@ CONFIG -= app_bundle
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 INCLUDEPATH += ../../QtHam2/Contest/Telnet/
+INCLUDEPATH += ../../Qtlogger/
+DEPENDPATH += $$PWD/../../QtLogger
+
+# This adds
+LIBS += -L/usr/local/lib -llogger
+
 
 SOURCES += \
         ../../QtHam2/Contest/Telnet/QTelnet.cpp \
@@ -23,6 +29,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     ../../QtHam2/Contest/Telnet/QTelnet.h \
+    log.h \
     qaggregator.h \
     qclusterdef.h \
     qtelnetcluster.h
@@ -31,4 +38,8 @@ RESOURCES += \
     resource.qrc
 
 DISTFILES += \
-    clusters.tsv
+    ../Readme.md \
+    NoFilter.ini \
+    clusters.tsv \
+    contest.ini \
+    me.ini

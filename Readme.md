@@ -16,7 +16,7 @@ My favorite contest logger is SkoomLogger, but the software author, did not want
 
 So if your software logger has only 1 Dx Cluster connection - and you want more... this may be of use....
 
-Or .... if you have a skimmer, which not in "public mode" i.e. it only feeds your station (This is what the Author of SkoomLogger and I disagreed about). I would like to "blend" my private data with public data, and to do that, I need two Cluster feeds - however only one was provided ....
+Or .... if you have a skimmer, which not in "public mode" i.e. it only feeds your station (This is what the Author of SkoomLogger and I disagreed about); and would like to "blend" your private data with public data, and to do that, I need two Cluster feeds - however only one was provided ....
 
 
 # So how does this work ?
@@ -32,6 +32,28 @@ This is handled by the Server.
 ## If my logger disconnects but the Dx-Cluster aggregator stays running can I get the missing spots when I re-connect ?
 
 Umm - good idea. I will add it on the hit list
+
+
+# How to run ??
+
+## V0.0a
+
+Just execute BasicConnect like this
+
+    ./BasicConnect 
+    
+There are other options available
+
+  - -l  Log output to a File
+  - -f  Specifiy a different (than my standard) cluster definition file
+  
+# Cluster Definition file 
+
+## V0.0a
+
+This is a TSV (Tab Seperated variable) file. But it will change.
+
+
 
 ## Other to do's
 
